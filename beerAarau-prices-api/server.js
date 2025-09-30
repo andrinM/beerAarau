@@ -1,5 +1,3 @@
-// server.js - Simplified for one 'beers' table
-
 // --- Basic Setup ---
 const express = require('express');
 const mysql = require('mysql2/promise');
@@ -24,11 +22,11 @@ const pool = mysql.createPool({
     queueLimit: 0
 });
 
-// --- API ROUTES (Simplified) ---
+// --- API ROUTES ---
 
 /**
  * @api {get} /api/beers
- * @description Fetches a list of all beers from the single 'beers' table.
+ * @description Fetches a list of all beers from the 'beers' table.
  */
 app.get('/api/beers', async (req, res) => {
     try {
