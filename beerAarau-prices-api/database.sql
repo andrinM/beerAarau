@@ -16,18 +16,35 @@ CREATE TABLE `beers` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `brewery` VARCHAR(255) NULL,
+  `volume` DECIMAL(10, 2),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Create the 'prices' table to link venues and beers with a price
--- CREATE TABLE `prices` (
---   `id` INT NOT NULL AUTO_INCREMENT,
---   `venue_id` INT NOT NULL,
---   `beer_id` INT NOT NULL,
---   `price` DECIMAL(6, 2) NOT NULL,
---   `volume_ml` INT NOT NULL,
---   `last_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
---   PRIMARY KEY (`id`),
---   FOREIGN KEY (`venue_id`) REFERENCES `venues`(`id`) ON DELETE CASCADE,
---   FOREIGN KEY (`beer_id`) REFERENCES `beers`(`id`) ON DELETE CASCADE
--- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE bars (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    street VARCHAR(255),
+    latitude DECIMAL(10, 8),
+    longitude DECIMAL(11, 8)
+);
+
+CREATE TABLE bar_has_beers (
+    bar_id INT NOT NULL,
+    beer_id INT NOT NULL,
+    price DECIMAL(10, 2), 
+    PRIMARY KEY (bar_id, beer_id),
+    FOREIGN KEY (bar_id) REFERENCES bars(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (beer_id) REFERENCES beers(id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- INSERT INTO `beers` (`name`, `brewery`, `volume`) VALUES
+-- ('Quellfrösch Hell', 'Brauerei Locher AG.', 0.5),
+-- ('Braufrisch', 'Feldschlösschen AG', 0.5),
+-- ('Chopfab Draft', 'Chopfab Boxer AG', 0.5),
+-- ('Calanda Glatsch', 'Calanda Bräu', 0.5);
+
+-- INSERT INTO `bars` (`name`, `street`, `latitude`, `longitude`) VALUES
+-- ('Mad Cat', 'Adelbändli 12','47.39301742991872', '8.042737828863576'),
+-- ('Tuchlaube Cafe Bar', 'Metzgergasse 18','47.394087632806894', '8.04377029999985'),
+-- ('Theo', 'Pelzgasse 29', '47.392450215624045', '8.04444717114053');
+
